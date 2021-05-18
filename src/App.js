@@ -1,34 +1,66 @@
-import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Main from './containers/Main'
+import React, { Suspense } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom';
 
-const { PUBLIC_URL } = process.env;
+import MainNavigation from './containers/MainNavigation';
+import Home from './containers/Home'
+import LoadingSpinner from './components/LoadingSpinner';
 
-// Every route - we lazy load so that each page can be chunked
-// NOTE that some of these chunks are very small. We should optimize
-// which pages are lazy loaded in the future.
-// const About = lazy(() => import('./pages/About'));
-// const Contact = lazy(() => import('./pages/Contact'));
-const Home = lazy(() => import('./containers/Home'));
-// const NotFound = lazy(() => import('./pages/NotFound'));
-// const Projects = lazy(() => import('./pages/Projects'));
-// const Resume = lazy(() => import('./pages/Resume'));
-// const Stats = lazy(() => import('./pages/Stats'));
+// const Users = React.lazy(() => import('./user/pages/Users'));
+// const NewPlace = React.lazy(() => import('./places/pages/UserPlaces'));
+// const UserPlaces = React.lazy(() => import('./places/pages/UserPlaces'));
+// const UpdatePlace = React.lazy(() => import('./places/pages/UpdatePlace'));
+// const Auth = React.lazy(() => import('./user/pages/Auth'));
 
-const App = () => (
-  <BrowserRouter basename={PUBLIC_URL}>
-    <Suspense fallback={<Main />}>
+const App = () => {
+  const divStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: '#cbcbcb6e',
+    marginTop:'64px',
+    height:'800px'
+}
+
+  let routes = (
       <Switch>
-        <Route exact path="/" component={Home} />
-        {/* <Route path="/about" component={About} /> */}
-        {/* <Route path="/projects" component={Projects} /> */}
-        {/* <Route path="/stats" component={Stats} /> */}
-        {/* <Route path="/contact" component={Contact} /> */}
-        {/* <Route path="/resume" component={Resume} /> */}
-        {/* <Route component={NotFound} status={404} /> */}
+        <Route path='/' exact>
+          <Home />
+        </Route>
+        <Route path='/about' exact>
+          {/* <UserPlaces /> */}
+        </Route>
+        <Route path='/work' exact>
+          {/* <NewPlace /> */}
+        </Route>
+        <Route path='/projects'>
+          {/* <UpdatePlace /> */}
+        </Route>
+        <Route path='/website-info'>
+          {/* <UpdatePlace /> */}
+        </Route>
+        <Redirect to='/' />
       </Switch>
-    </Suspense>
-  </BrowserRouter>
-);
+    );
+
+  return (
+      <Router>
+        <MainNavigation />
+        <div style={divStyle}>
+          <Suspense
+            fallback={
+              <div className='center'>
+                <LoadingSpinner />
+              </div>
+            }>
+            {routes}
+          </Suspense>
+          </div>
+      </Router>
+  );
+};
 
 export default App;
