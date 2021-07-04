@@ -10,12 +10,6 @@ import MainNavigation from './containers/MainNavigation';
 import Home from './containers/Home'
 import LoadingSpinner from './components/LoadingSpinner';
 
-// const Users = React.lazy(() => import('./user/pages/Users'));
-// const NewPlace = React.lazy(() => import('./places/pages/UserPlaces'));
-// const UserPlaces = React.lazy(() => import('./places/pages/UserPlaces'));
-// const UpdatePlace = React.lazy(() => import('./places/pages/UpdatePlace'));
-// const Auth = React.lazy(() => import('./user/pages/Auth'));
-
 const App = () => {
   const divStyle = {
     display: 'flex',
@@ -31,16 +25,12 @@ const App = () => {
           <Home />
         </Route>
         <Route path='/about' exact>
-          {/* <UserPlaces /> */}
         </Route>
         <Route path='/work' exact>
-          {/* <NewPlace /> */}
         </Route>
         <Route path='/projects'>
-          {/* <UpdatePlace /> */}
         </Route>
         <Route path='/website-info'>
-          {/* <UpdatePlace /> */}
         </Route>
         <Redirect to='/' />
       </Switch>
